@@ -50,11 +50,17 @@ def init_database():
 
 def get_user_tier() -> str:
     """Get the current user's subscription tier"""
-    return getattr(st.session_state, 'user_tier', 'free')
+    try:
+        return st.session_state.user_tier
+    except (AttributeError, KeyError):
+        return 'free'
 
 def check_user_subscription() -> bool:
     """Check if user has active subscription"""
-    user_tier = getattr(st.session_state, 'user_tier', 'free')
+    try:
+        user_tier = st.session_state.user_tier
+    except (AttributeError, KeyError):
+        user_tier = 'free'
     return user_tier in ['pro', 'founder']
 
 def is_pro_feature() -> bool:

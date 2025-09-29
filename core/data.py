@@ -162,11 +162,13 @@ def get_top_ivr_tickers(limit: int = 10) -> List[Tuple[str, float]]:
     try:
         # Cache the result for 5 minutes
         cache_key = f"top_ivr_{limit}"
-        cached_data = getattr(st.session_state, cache_key, None)
-        if cached_data is not None:
+        try:
+            cached_data = st.session_state[cache_key]
             data, timestamp = cached_data
             if time.time() - timestamp < 300:  # 5 minutes
                 return data
+        except (AttributeError, KeyError):
+            pass
         
         # Popular tickers to check
         tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'AMD', 'INTC', 
