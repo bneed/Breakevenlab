@@ -50,15 +50,12 @@ def init_database():
 
 def get_user_tier() -> str:
     """Get the current user's subscription tier"""
-    if 'user_tier' not in st.session_state:
-        st.session_state.user_tier = 'free'
-    return st.session_state.user_tier
+    return getattr(st.session_state, 'user_tier', 'free')
 
 def check_user_subscription() -> bool:
     """Check if user has active subscription"""
-    if 'user_tier' not in st.session_state:
-        st.session_state.user_tier = 'free'
-    return st.session_state.user_tier in ['pro', 'founder']
+    user_tier = getattr(st.session_state, 'user_tier', 'free')
+    return user_tier in ['pro', 'founder']
 
 def is_pro_feature() -> bool:
     """Check if current user can access pro features"""
