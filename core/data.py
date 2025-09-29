@@ -26,6 +26,8 @@ class DataManager:
         try:
             ticker = yf.Ticker(symbol)
             data = ticker.history(period=period)
+            if data.empty:
+                st.warning(f"No data available for {symbol}")
             return data
         except Exception as e:
             st.error(f"Error fetching data for {symbol}: {str(e)}")

@@ -30,11 +30,15 @@ def show_breakeven_calculator():
         symbol = st.text_input("Stock Symbol", value="AAPL", help="Enter the underlying stock symbol")
         
         # Get current stock price
-        current_price = get_stock_price(symbol)
-        if current_price > 0:
-            st.success(f"Current {symbol} Price: ${current_price:.2f}")
-        else:
-            st.error(f"Could not fetch price for {symbol}")
+        try:
+            current_price = get_stock_price(symbol)
+            if current_price > 0:
+                st.success(f"Current {symbol} Price: ${current_price:.2f}")
+            else:
+                st.warning(f"Could not fetch price for {symbol}, using default")
+                current_price = 100  # Default fallback
+        except Exception as e:
+            st.error(f"Error fetching price for {symbol}: {str(e)}")
             current_price = 100  # Default fallback
         
         # Strategy type selection
@@ -78,13 +82,21 @@ def show_breakeven_calculator():
             return
         
         # Create strategy
-        strategy = create_strategy_from_input(legs)
+        try:
+            strategy = create_strategy_from_input(legs)
+        except Exception as e:
+            st.error(f"Error creating strategy: {str(e)}")
+            return
         
         # Calculate time to expiration (use first leg's expiration)
-        time_to_exp = (legs[0]['expiration'] - datetime.now()).days / 365.0
-        
-        if time_to_exp <= 0:
-            st.error("Expiration date must be in the future")
+        try:
+            time_to_exp = (legs[0]['expiration'] - datetime.now()).days / 365.0
+            
+            if time_to_exp <= 0:
+                st.error("Expiration date must be in the future")
+                return
+        except Exception as e:
+            st.error(f"Error calculating time to expiration: {str(e)}")
             return
         
         # Display strategy summary
