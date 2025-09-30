@@ -1,0 +1,107 @@
+default:
+  name: "Default Strategy"
+  description: "Balanced approach with trend following and momentum"
+  filters:
+    rsi_min: 0
+    rsi_max: 100
+    price_above_sma200: null
+    min_volume_ratio: 1.0
+    min_score: 50
+
+reversal:
+  name: "Reversal Strategy"
+  description: "Look for oversold conditions with bullish divergence"
+  filters:
+    rsi_min: 0
+    rsi_max: 35
+    price_above_sma200: false
+    min_volume_ratio: 1.0
+    min_score: 60
+  signals:
+    - rsi_oversold
+    - above_sma50
+    - volume_spike
+
+breakout:
+  name: "Breakout Strategy"
+  description: "Look for breakouts above resistance with volume"
+  filters:
+    rsi_min: 50
+    rsi_max: 100
+    price_above_sma200: true
+    min_volume_ratio: 1.5
+    min_score: 70
+  signals:
+    - breakout_up
+    - volume_spike
+    - above_sma50
+
+trend:
+  name: "Trend Following"
+  description: "Follow strong trends with momentum"
+  filters:
+    rsi_min: 40
+    rsi_max: 80
+    price_above_sma200: true
+    min_volume_ratio: 1.2
+    min_score: 65
+  signals:
+    - golden_cross
+    - ema_bullish
+    - above_sma50
+
+momentum:
+  name: "Momentum Strategy"
+  description: "Capture strong momentum moves"
+  filters:
+    rsi_min: 60
+    rsi_max: 100
+    price_above_sma200: true
+    min_volume_ratio: 1.3
+    min_score: 75
+  signals:
+    - ema_cross_up
+    - macd_bullish
+    - volume_surge
+
+volatility:
+  name: "Volatility Strategy"
+  description: "Trade on volatility expansion and contraction"
+  filters:
+    rsi_min: 30
+    rsi_max: 70
+    price_above_sma200: null
+    min_volume_ratio: 1.0
+    min_score: 60
+  signals:
+    - atr_expansion
+    - bb_breakout_up
+    - volume_spike
+
+earnings:
+  name: "Earnings Strategy"
+  description: "Trade around earnings announcements"
+  filters:
+    rsi_min: 0
+    rsi_max: 100
+    price_above_sma200: null
+    min_volume_ratio: 2.0
+    min_score: 80
+  signals:
+    - volume_surge
+    - gap_up
+    - breakout_up
+
+sector_rotation:
+  name: "Sector Rotation"
+  description: "Identify sector leadership changes"
+  filters:
+    rsi_min: 50
+    rsi_max: 100
+    price_above_sma200: true
+    min_volume_ratio: 1.5
+    min_score: 70
+  signals:
+    - golden_cross
+    - ema_bullish
+    - volume_spike
