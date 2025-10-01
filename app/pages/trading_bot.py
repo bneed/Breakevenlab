@@ -400,12 +400,22 @@ def show_trading_bot():
                 min_volume_ratio=min_volume_ratio,
                 min_volatility=min_volatility
             )
+            
+            # Debug: Show what columns we have
+            if not results.empty:
+                st.write(f"Debug: Found {len(results)} stocks")
+                st.write(f"Debug: Columns: {list(results.columns)}")
+            else:
+                st.write("Debug: No results found")
         
         # Filter by minimum score (if score column exists)
         if not results.empty and 'score' in results.columns:
             results = results[results['score'] >= min_score]
         
         if not results.empty:
+            # Debug: Check if we have the required columns
+            st.write(f"Debug: Before get_top_recommendations - Columns: {list(results.columns)}")
+            
             # Get top recommendations
             top_picks = bot.get_top_recommendations(results, limit=10)
             
