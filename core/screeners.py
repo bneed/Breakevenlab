@@ -254,12 +254,12 @@ class StockScreener:
         return df
     
     def screen_low_cap_movers(self, 
-                            min_price: float = 20.0, 
-                            max_price: float = 50.0,
-                            min_market_cap: float = 1_000_000_000,
-                            max_market_cap: float = 50_000_000_000,
-                            min_volume_ratio: float = 0.5,
-                            min_volatility: float = 0.01) -> pd.DataFrame:
+                            min_price: float = 1.0, 
+                            max_price: float = 10.0,
+                            min_market_cap: float = 100_000_000,
+                            max_market_cap: float = 2_000_000_000,
+                            min_volume_ratio: float = 2.0,
+                            min_volatility: float = 0.15) -> pd.DataFrame:
         """
         Screen for low cap stocks with high movement potential
         
@@ -412,12 +412,12 @@ def screen_high_theta(min_theta: float = 0.1, max_dte: int = 30) -> pd.DataFrame
     """Screen options with high theta"""
     return screener.screen_high_theta(min_theta, max_dte)
 
-def screen_low_cap_movers(min_price: float = 20.0, 
-                        max_price: float = 50.0,
-                        min_market_cap: float = 1_000_000_000,
-                        max_market_cap: float = 50_000_000_000,
-                        min_volume_ratio: float = 0.5,
-                        min_volatility: float = 0.01) -> pd.DataFrame:
+def screen_low_cap_movers(min_price: float = 1.0, 
+                        max_price: float = 10.0,
+                        min_market_cap: float = 100_000_000,
+                        max_market_cap: float = 2_000_000_000,
+                        min_volume_ratio: float = 2.0,
+                        min_volatility: float = 0.15) -> pd.DataFrame:
     """Screen for low cap stocks with high movement potential"""
     return screener.screen_low_cap_movers(
         min_price, max_price, min_market_cap, 

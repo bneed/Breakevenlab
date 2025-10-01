@@ -316,7 +316,7 @@ def show_trading_bot():
         min_price = st.number_input(
             "Minimum Price ($)", 
             min_value=0.01, 
-            value=20.0,
+            value=1.0,
             step=0.01,
             help="Minimum stock price"
         )
@@ -324,7 +324,7 @@ def show_trading_bot():
         max_price = st.number_input(
             "Maximum Price ($)", 
             min_value=0.01, 
-            value=50.0,
+            value=10.0,
             step=0.01,
             help="Maximum stock price"
         )
@@ -333,16 +333,16 @@ def show_trading_bot():
         st.subheader("Market Cap Range")
         min_market_cap = st.number_input(
             "Min Market Cap (B)", 
-            min_value=0.1, 
+            min_value=0.01, 
             value=0.1,
-            step=0.1,
+            step=0.01,
             help="Minimum market cap in billions"
         ) * 1_000_000_000
         
         max_market_cap = st.number_input(
             "Max Market Cap (B)", 
             min_value=0.1, 
-            value=10.0,
+            value=2.0,
             step=0.1,
             help="Maximum market cap in billions"
         ) * 1_000_000_000
@@ -352,8 +352,8 @@ def show_trading_bot():
         min_volume_ratio = st.slider(
             "Minimum Volume Ratio", 
             min_value=1.0, 
-            max_value=5.0, 
-            value=1.5, 
+            max_value=10.0, 
+            value=2.0, 
             step=0.1,
             help="Volume vs 30-day average"
         )
@@ -361,8 +361,8 @@ def show_trading_bot():
         min_volatility = st.slider(
             "Minimum Volatility", 
             min_value=0.01, 
-            max_value=0.10, 
-            value=0.02, 
+            max_value=0.50, 
+            value=0.15, 
             step=0.01,
             help="Minimum daily volatility"
         )
@@ -372,9 +372,9 @@ def show_trading_bot():
         min_score = st.slider(
             "Minimum Score", 
             min_value=0, 
-            max_value=100, 
-            value=60, 
-            step=5,
+            max_value=10, 
+            value=1.0, 
+            step=0.1,
             help="Minimum trading score"
         )
         
