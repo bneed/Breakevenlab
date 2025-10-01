@@ -431,6 +431,11 @@ def show_trading_bot():
                     results['sell_price'] = results['price'] * 1.15
                     results['stop_loss'] = results['price'] * 0.90
                 
+                if 'risk_reward' not in results.columns:
+                    st.write("Debug: Adding missing risk_reward column")
+                    # Calculate risk/reward ratio: (sell_price - buy_price) / (buy_price - stop_loss)
+                    results['risk_reward'] = (results['sell_price'] - results['buy_price']) / (results['buy_price'] - results['stop_loss'])
+                
                 st.write(f"Debug: After adding columns - Columns: {list(results.columns)}")
             else:
                 st.write("Debug: No results found")
