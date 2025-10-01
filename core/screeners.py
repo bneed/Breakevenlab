@@ -366,7 +366,14 @@ class StockScreener:
         
         df = pd.DataFrame(results)
         if not df.empty:
-            df = df.sort_values('volume_ratio', ascending=False)
+            # Calculate a simple score based on volume ratio, volatility, and price change
+            df['score'] = (
+                df['volume_ratio'] * 0.4 +  # Volume activity (40%)
+                df['volatility'] * 10 * 0.3 +  # Volatility (30%) - scaled up
+                abs(df['price_change_1d']) * 0.2 +  # 1-day price change (20%)
+                abs(df['price_change_5d']) * 0.1  # 5-day price change (10%)
+            )
+            df = df.sort_values('score', ascending=False)
         
         return df
 

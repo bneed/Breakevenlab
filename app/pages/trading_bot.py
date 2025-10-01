@@ -397,8 +397,8 @@ def show_trading_bot():
                 min_volatility=min_volatility
             )
         
-        # Filter by minimum score
-        if not results.empty:
+        # Filter by minimum score (if score column exists)
+        if not results.empty and 'score' in results.columns:
             results = results[results['score'] >= min_score]
         
         if not results.empty:
