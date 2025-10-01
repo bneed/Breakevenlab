@@ -282,13 +282,17 @@ class LowCapTradingBot:
         if df.empty:
             return df
         
-        # Filter for actionable recommendations
-        actionable = df[df['recommendation'].isin(['STRONG BUY', 'BUY', 'WEAK BUY'])]
+        # Filter for actionable recommendations (if recommendation column exists)
+        if 'recommendation' in df.columns:
+            actionable = df[df['recommendation'].isin(['STRONG BUY', 'BUY', 'WEAK BUY'])]
+            if not actionable.empty:
+                return actionable.head(limit)
         
-        if actionable.empty:
+        # Fallback: return top stocks by score or just top N
+        if 'score' in df.columns:
             return df.head(limit)
-        
-        return actionable.head(limit)
+        else:
+            return df.head(limit)
 
 def show_trading_bot():
     """Display the trading bot page"""

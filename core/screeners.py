@@ -373,6 +373,20 @@ class StockScreener:
                 abs(df['price_change_1d']) * 0.2 +  # 1-day price change (20%)
                 abs(df['price_change_5d']) * 0.1  # 5-day price change (10%)
             )
+            
+            # Generate recommendations based on score and other factors
+            df['recommendation'] = 'HOLD'  # Default
+            df.loc[df['score'] >= 3.0, 'recommendation'] = 'STRONG BUY'
+            df.loc[(df['score'] >= 2.0) & (df['score'] < 3.0), 'recommendation'] = 'BUY'
+            df.loc[(df['score'] >= 1.5) & (df['score'] < 2.0), 'recommendation'] = 'WEAK BUY'
+            df.loc[(df['score'] >= 1.0) & (df['score'] < 1.5), 'recommendation'] = 'HOLD'
+            df.loc[df['score'] < 1.0, 'recommendation'] = 'WEAK SELL'
+            
+            # Add buy/sell price targets (simple calculations)
+            df['buy_price'] = df['price'] * 0.98  # 2% below current price
+            df['sell_price'] = df['price'] * 1.15  # 15% above current price for profit target
+            df['stop_loss'] = df['price'] * 0.90   # 10% below current price for stop loss
+            
             df = df.sort_values('score', ascending=False)
         
         return df
