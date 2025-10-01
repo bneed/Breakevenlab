@@ -84,6 +84,9 @@ def main():
             "Choose a tool:",
             [
                 "🏠 Home",
+                "🤖 Trading Bot",
+                "📡 Market Scanner",
+                "🛡️ Risk Manager",
                 "📈 Break-even Calculator",
                 "⚖️ Position Sizing",
                 "📊 Greeks Viewer",
@@ -109,6 +112,15 @@ def main():
     # Main content based on selection
     if page == "🏠 Home":
         show_home_page()
+    elif page == "🤖 Trading Bot":
+        from pages.trading_bot import show_trading_bot
+        show_trading_bot()
+    elif page == "📡 Market Scanner":
+        from pages.market_scanner import show_market_scanner
+        show_market_scanner()
+    elif page == "🛡️ Risk Manager":
+        from pages.risk_manager import show_risk_manager
+        show_risk_manager()
     elif page == "📈 Break-even Calculator":
         from pages.breakeven_calculator import show_breakeven_calculator
         show_breakeven_calculator()
@@ -143,27 +155,27 @@ def show_home_page():
     with col1:
         st.markdown("""
         <div class="feature-card">
-            <h3>📈 Break-even Calculator</h3>
-            <p>Multi-leg options P/L analysis with Greeks</p>
-            <span class="free-badge">FREE</span>
+            <h3>🤖 Trading Bot</h3>
+            <p>AI-powered low cap stock screener for Robinhood</p>
+            <span class="pro-badge">NEW</span>
         </div>
         """, unsafe_allow_html=True)
         
     with col2:
         st.markdown("""
         <div class="feature-card">
-            <h3>⚖️ Position Sizing</h3>
-            <p>Kelly fraction, risk management tools</p>
-            <span class="free-badge">FREE</span>
+            <h3>📡 Market Scanner</h3>
+            <p>Real-time scanning for trading opportunities</p>
+            <span class="pro-badge">NEW</span>
         </div>
         """, unsafe_allow_html=True)
         
     with col3:
         st.markdown("""
         <div class="feature-card">
-            <h3>📊 Greeks Snapshot</h3>
-            <p>Delta, Gamma, Theta, Vega, Rho analysis</p>
-            <span class="free-badge">FREE</span>
+            <h3>🛡️ Risk Manager</h3>
+            <p>Position sizing and portfolio risk management</p>
+            <span class="pro-badge">NEW</span>
         </div>
         """, unsafe_allow_html=True)
     

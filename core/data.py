@@ -55,6 +55,58 @@ class DataManager:
             st.error(f"Error fetching options data for {symbol}: {str(e)}")
             return {}
     
+    def get_stock_info(self, symbol: str) -> Dict[str, Any]:
+        """Get comprehensive stock information including market cap"""
+        try:
+            ticker = yf.Ticker(symbol)
+            info = ticker.info
+            
+            return {
+                'market_cap': info.get('marketCap', 0),
+                'enterprise_value': info.get('enterpriseValue', 0),
+                'shares_outstanding': info.get('sharesOutstanding', 0),
+                'float_shares': info.get('floatShares', 0),
+                'sector': info.get('sector', 'Unknown'),
+                'industry': info.get('industry', 'Unknown'),
+                'employees': info.get('fullTimeEmployees', 0),
+                'website': info.get('website', ''),
+                'description': info.get('longBusinessSummary', ''),
+                'pe_ratio': info.get('trailingPE', 0),
+                'forward_pe': info.get('forwardPE', 0),
+                'peg_ratio': info.get('pegRatio', 0),
+                'price_to_book': info.get('priceToBook', 0),
+                'debt_to_equity': info.get('debtToEquity', 0),
+                'return_on_equity': info.get('returnOnEquity', 0),
+                'revenue_growth': info.get('revenueGrowth', 0),
+                'earnings_growth': info.get('earningsGrowth', 0),
+                'beta': info.get('beta', 1.0),
+                'dividend_yield': info.get('dividendYield', 0),
+                'ex_dividend_date': info.get('exDividendDate', None),
+                'dividend_rate': info.get('dividendRate', 0),
+                'payout_ratio': info.get('payoutRatio', 0),
+                '52_week_high': info.get('fiftyTwoWeekHigh', 0),
+                '52_week_low': info.get('fiftyTwoWeekLow', 0),
+                '50_day_avg': info.get('fiftyDayAverage', 0),
+                '200_day_avg': info.get('twoHundredDayAverage', 0),
+                'avg_volume': info.get('averageVolume', 0),
+                'avg_volume_10days': info.get('averageVolume10days', 0),
+                'avg_volume_3months': info.get('averageVolume3months', 0),
+                'max_supply': info.get('maxSupply', 0),
+                'total_supply': info.get('totalSupply', 0),
+                'circulating_supply': info.get('circulatingSupply', 0),
+            }
+        except Exception as e:
+            st.error(f"Error fetching stock info for {symbol}: {str(e)}")
+            return {}
+    
+    def get_market_cap(self, symbol: str) -> Optional[float]:
+        """Get market cap for a symbol"""
+        try:
+            info = self.get_stock_info(symbol)
+            return info.get('market_cap', 0) if info else None
+        except:
+            return None
+    
     def calculate_iv_rank(self, symbol: str) -> float:
         """Calculate IV Rank for a symbol"""
         try:

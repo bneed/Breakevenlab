@@ -1,0 +1,35 @@
+# Trading Bot Requirements
+# Core dependencies for the low cap trading bot system
+
+# Data and Analysis
+yfinance>=0.2.18
+pandas>=1.5.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Technical Analysis
+ta>=0.10.2
+talib>=0.4.25
+
+# Machine Learning
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Web Framework
+streamlit>=1.28.0
+plotly>=5.15.0
+
+# Data Processing
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Optional: Enhanced data sources
+# alpha-vantage>=2.3.1
+# finnhub-python>=2.4.0
+
+# Development and Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Performance
+numba>=0.57.0
