@@ -436,6 +436,15 @@ def show_trading_bot():
                     # Calculate risk/reward ratio: (sell_price - buy_price) / (buy_price - stop_loss)
                     results['risk_reward'] = (results['sell_price'] - results['buy_price']) / (results['buy_price'] - results['stop_loss'])
                 
+                if 'reasons' not in results.columns:
+                    st.write("Debug: Adding missing reasons column")
+                    # Generate reasons based on score and other factors
+                    results['reasons'] = ''
+                    results.loc[results['score'] >= 3.0, 'reasons'] = 'High volume, high volatility, strong momentum'
+                    results.loc[(results['score'] >= 2.0) & (results['score'] < 3.0), 'reasons'] = 'Good volume and volatility'
+                    results.loc[(results['score'] >= 1.5) & (results['score'] < 2.0), 'reasons'] = 'Moderate activity'
+                    results.loc[results['score'] < 1.5, 'reasons'] = 'Low activity'
+                
                 st.write(f"Debug: After adding columns - Columns: {list(results.columns)}")
             else:
                 st.write("Debug: No results found")
