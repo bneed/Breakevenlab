@@ -405,6 +405,33 @@ def show_trading_bot():
             if not results.empty:
                 st.write(f"Debug: Found {len(results)} stocks")
                 st.write(f"Debug: Columns: {list(results.columns)}")
+                
+                # Force add missing columns if they don't exist
+                if 'score' not in results.columns:
+                    st.write("Debug: Adding missing score column")
+                    results['score'] = (
+                        results['volume_ratio'] * 0.4 +
+                        results['volatility'] * 10 * 0.3 +
+                        abs(results['price_change_1d']) * 0.2 +
+                        abs(results['price_change_5d']) * 0.1
+                    )
+                
+                if 'recommendation' not in results.columns:
+                    st.write("Debug: Adding missing recommendation column")
+                    results['recommendation'] = 'HOLD'
+                    results.loc[results['score'] >= 3.0, 'recommendation'] = 'STRONG BUY'
+                    results.loc[(results['score'] >= 2.0) & (results['score'] < 3.0), 'recommendation'] = 'BUY'
+                    results.loc[(results['score'] >= 1.5) & (results['score'] < 2.0), 'recommendation'] = 'WEAK BUY'
+                    results.loc[(results['score'] >= 1.0) & (results['score'] < 1.5), 'recommendation'] = 'HOLD'
+                    results.loc[results['score'] < 1.0, 'recommendation'] = 'WEAK SELL'
+                
+                if 'buy_price' not in results.columns:
+                    st.write("Debug: Adding missing price target columns")
+                    results['buy_price'] = results['price'] * 0.98
+                    results['sell_price'] = results['price'] * 1.15
+                    results['stop_loss'] = results['price'] * 0.90
+                
+                st.write(f"Debug: After adding columns - Columns: {list(results.columns)}")
             else:
                 st.write("Debug: No results found")
         
